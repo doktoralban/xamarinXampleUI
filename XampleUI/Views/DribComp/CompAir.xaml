@@ -1,0 +1,265 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="XampleUI.Views.DribComp.CompAir"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:XampleUI.Models"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False">
+    <ScrollView>
+        <Grid HeightRequest="1000">
+            <StackLayout BackgroundColor="Red" Spacing="0">
+                <StackLayout
+                    HeightRequest="160"
+                    HorizontalOptions="Center"
+                    Orientation="Horizontal">
+                    <Label
+                        Margin="0,0,0,48"
+                        FontSize="28"
+                        Text="Comp"
+                        TextColor="White"
+                        VerticalOptions="Center" />
+                    <Label
+                        Margin="0,0,0,48"
+                        FontAttributes="Bold"
+                        FontSize="28"
+                        Text="Air"
+                        TextColor="White"
+                        VerticalOptions="Center" />
+                </StackLayout>
+                <StackLayout BackgroundColor="Black" HeightRequest="52">
+                    <Label
+                        Padding="16,0"
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        HorizontalOptions="Start"
+                        Text="FEATURE"
+                        TextColor="White"
+                        VerticalOptions="CenterAndExpand" />
+                </StackLayout>
+                <StackLayout VerticalOptions="FillAndExpand">
+                    <StackLayout.Resources>
+                        <ResourceDictionary>
+                            <Style TargetType="Label">
+                                <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+                                <Setter Property="HorizontalOptions" Value="Start" />
+                                <Setter Property="Padding" Value="16,0" />
+                                <Setter Property="FontSize" Value="17" />
+                                <Setter Property="TextColor" Value="Brown" />
+                            </Style>
+                            <Style TargetType="StackLayout">
+                                <Setter Property="HeightRequest" Value="76" />
+                                <Setter Property="BackgroundColor" Value="#ffb39b" />
+                            </Style>
+                        </ResourceDictionary>
+                    </StackLayout.Resources>
+                    <StackLayout>
+                        <Label Text="Seat pitch" />
+                    </StackLayout>
+                    <StackLayout BackgroundColor="#ffd2c4">
+                        <Label Text="Seat width" />
+                    </StackLayout>
+                    <StackLayout>
+                        <Label Text="Wi-Fi" />
+                    </StackLayout>
+                    <StackLayout BackgroundColor="#ffd2c4">
+                        <Label Text="Entertainment" />
+                    </StackLayout>
+                    <StackLayout>
+                        <Label Text="In-seat Power" />
+                    </StackLayout>
+                    <StackLayout BackgroundColor="#ffd2c4">
+                        <Label Text="Seat Selection" />
+                    </StackLayout>
+                    <StackLayout>
+                        <Label Text="Loyalty Tiers" />
+                    </StackLayout>
+                    <StackLayout BackgroundColor="#ffd2c4">
+                        <Label Text="Checked Bag" />
+                    </StackLayout>
+                    <StackLayout>
+                        <Label Text="Points Expiration" />
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+
+            <Frame
+                x:Name="LeftFrame"
+                Margin="0,108,124,0"
+                Padding="18,12"
+                BackgroundColor="White"
+                CornerRadius="10"
+                HorizontalOptions="End"
+                Opacity="0.95"
+                WidthRequest="82">
+                <CollectionView
+                    x:Name="LeftList"
+                    Margin="-18,0"
+                    IsEnabled="False"
+                    ItemsSource="{Binding ItemsCompaPin}"
+                    SelectedItem="{Binding CurrentLeftItem}"
+                    SelectionMode="None"
+                    VerticalOptions="FillAndExpand">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout
+                            Orientation="Horizontal"
+                            SnapPointsAlignment="Start"
+                            SnapPointsType="MandatorySingle" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout
+                                Margin="0"
+                                x:DataType="model:ItemAir"
+                                WidthRequest="116">
+                                <StackLayout.Resources>
+                                    <ResourceDictionary>
+                                        <Style TargetType="Label">
+                                            <Setter Property="VerticalOptions" Value="Center" />
+                                            <Setter Property="VerticalTextAlignment" Value="Center" />
+                                            <Setter Property="HorizontalOptions" Value="Center" />
+                                            <Setter Property="HeightRequest" Value="76" />
+                                            <Setter Property="FontSize" Value="17" />
+                                        </Style>
+                                        <Style TargetType="Image">
+                                            <Setter Property="VerticalOptions" Value="Center" />
+                                            <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+                                            <Setter Property="HeightRequest" Value="76" />
+                                            <Setter Property="WidthRequest" Value="40" />
+                                            <Setter Property="Aspect" Value="AspectFit" />
+                                        </Style>
+                                    </ResourceDictionary>
+                                </StackLayout.Resources>
+
+                                <Image
+                                    Margin="0,6"
+                                    HeightRequest="28"
+                                    HorizontalOptions="FillAndExpand"
+                                    Source="{Binding Image}" />
+
+                                <Grid Margin="0,6,0,-18" HeightRequest="52">
+                                    <Label
+                                        Margin="0,0,0,24"
+                                        FontSize="15"
+                                        Text="PINNED" />
+                                    <Button
+                                        Margin="0,0,0,24"
+                                        Padding="0"
+                                        BackgroundColor="#ffce4a"
+                                        Command="{Binding Path=BindingContext.PinAirlineCmd, Source={x:Reference LeftFrame}}"
+                                        CommandParameter="{Binding .}"
+                                        FontSize="12"
+                                        HeightRequest="26"
+                                        HorizontalOptions="Center"
+                                        IsVisible="{Binding Path=BindingContext.IsNotOriginalPostion, Source={x:Reference LeftFrame}}"
+                                        Text="PIN"
+                                        TextColor="Brown"
+                                        VerticalOptions="Center"
+                                        WidthRequest="84" />
+                                </Grid>
+                                <Label Text="{Binding SeatPitch}" />
+                                <Label Text="{Binding SeatWidth}" />
+                                <Image Source="{Binding Wifi}" />
+                                <Image Source="{Binding Entertainment}" />
+                                <Image Source="{Binding InSeatPower}" />
+                                <Image Source="{Binding SeatSelection}" />
+                                <Label Text="{Binding LoyaltyTiers}" />
+                                <Image Source="{Binding CheckedBags}" />
+                                <Label Text="{Binding PointsExpiration}" />
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Frame>
+
+            <Frame
+                x:Name="RightFrame"
+                Margin="0,108,0,0"
+                Padding="18,12"
+                BackgroundColor="White"
+                CornerRadius="10"
+                HorizontalOptions="End"
+                Opacity="0.95"
+                WidthRequest="82">
+                <CollectionView
+                    x:Name="RightList"
+                    Margin="-18,0"
+                    ItemsSource="{Binding ItemsCompa}"
+                    SelectedItem="{Binding CurrentRightItem, Mode=TwoWay}"
+                    SelectionMode="None"
+                    VerticalOptions="FillAndExpand">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout
+                            Orientation="Horizontal"
+                            SnapPointsAlignment="Start"
+                            SnapPointsType="MandatorySingle" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout
+                                Margin="0"
+                                x:DataType="model:ItemAir"
+                                WidthRequest="116">
+
+                                <StackLayout.Resources>
+                                    <ResourceDictionary>
+                                        <Style TargetType="Label">
+                                            <Setter Property="VerticalOptions" Value="Center" />
+                                            <Setter Property="VerticalTextAlignment" Value="Center" />
+                                            <Setter Property="HorizontalOptions" Value="Center" />
+                                            <Setter Property="HeightRequest" Value="76" />
+                                            <Setter Property="FontSize" Value="17" />
+                                        </Style>
+                                        <Style TargetType="Image">
+                                            <Setter Property="VerticalOptions" Value="Center" />
+                                            <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+                                            <Setter Property="HeightRequest" Value="76" />
+                                            <Setter Property="WidthRequest" Value="40" />
+                                            <Setter Property="Aspect" Value="AspectFit" />
+                                        </Style>
+                                    </ResourceDictionary>
+                                </StackLayout.Resources>
+
+                                <Image
+                                    Margin="0,6"
+                                    HeightRequest="28"
+                                    HorizontalOptions="FillAndExpand"
+                                    Source="{Binding Image}" />
+
+                                <Grid Margin="0,6,0,-18" HeightRequest="52">
+                                    <Label
+                                        Margin="0,0,0,24"
+                                        FontSize="16"
+                                        Text="PINNED" />
+                                    <Button
+                                        Margin="0,0,0,24"
+                                        Padding="0"
+                                        BackgroundColor="#ffce4a"
+                                        Command="{Binding Path=BindingContext.PinAirlineCmd, Source={x:Reference RightFrame}}"
+                                        CommandParameter="{Binding .}"
+                                        FontSize="12"
+                                        HeightRequest="26"
+                                        HorizontalOptions="Center"
+                                        IsVisible="{Binding Path=BindingContext.IsOriginalPostion, Source={x:Reference RightFrame}}"
+                                        Text="PIN"
+                                        TextColor="Brown"
+                                        VerticalOptions="Center"
+                                        WidthRequest="84" />
+                                </Grid>
+                                <Label Text="{Binding SeatPitch}" />
+                                <Label Text="{Binding SeatWidth}" />
+                                <Image Source="{Binding Wifi}" />
+                                <Image Source="{Binding Entertainment}" />
+                                <Image Source="{Binding InSeatPower}" />
+                                <Image Source="{Binding SeatSelection}" />
+                                <Label Text="{Binding LoyaltyTiers}" />
+                                <Image Source="{Binding CheckedBags}" />
+                                <Label Text="{Binding PointsExpiration}" />
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Frame>
+        </Grid>
+    </ScrollView>
+</ContentPage>

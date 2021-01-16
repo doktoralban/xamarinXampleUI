@@ -1,0 +1,312 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="XampleUI.Views.DribGrocs.GrocList"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:XampleUI.ViewModels.Groc"
+    xmlns:model="clr-namespace:XampleUI.Models"
+    xmlns:sharedTransitions="clr-namespace:Plugin.SharedTransitions;assembly=Plugin.SharedTransitions"
+    BackgroundColor="Black"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False">
+
+    <RefreshView
+        x:DataType="local:GrocsViewModel"
+        Command="{Binding LoadItemsCommand}"
+        IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        <StackLayout
+            x:Name="RootContainer"
+            Margin="0,0,0,-800"
+            BackgroundColor="Black"
+            Spacing="0">
+            <Frame
+                Margin="0,-40,0,0"
+                Padding="0,40,0,24"
+                BackgroundColor="#f7f4ef"
+                CornerRadius="48">
+                <ScrollView HeightRequest="580">
+                    <Grid Margin="8,0" ColumnDefinitions="*,*">
+                        <!--<CollectionView
+                        x:Name="ItemsListView"
+                        Margin="16"
+                        ItemsSource="{Binding Grocs}"
+                        SelectionMode="None"
+                        VerticalOptions="FillAndExpand">
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout
+                                HorizontalItemSpacing="16"
+                                Orientation="Vertical"
+                                Span="2"
+                                VerticalItemSpacing="16" />
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame
+                                    Padding="0"
+                                    CornerRadius="10"
+                                    HeightRequest="272">
+                                    <StackLayout
+                                        Padding="22"
+                                        x:DataType="model:Item"
+                                        BackgroundColor="White">
+                                        <Image
+                                            Margin="0,16"
+                                            sharedTransitions:Transition.Name="{Binding Text}"
+                                            HeightRequest="88"
+                                            HorizontalOptions="Center"
+                                            Source="{Binding Image}" />
+                                        <Label
+                                            Margin="0,10"
+                                            FontAttributes="Bold"
+                                            FontSize="22"
+                                            Style="{DynamicResource ListItemTextStyle}"
+                                            Text="{Binding Price, StringFormat='{0:c}'}"
+                                            TextColor="#333333" />
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="14"
+                                            Style="{DynamicResource ListItemTextStyle}"
+                                            Text="{Binding Text}"
+                                            TextColor="#333333" />
+                                        <Label
+                                            FontSize="13"
+                                            LineBreakMode="NoWrap"
+                                            Style="{DynamicResource ListItemDetailTextStyle}"
+                                            Text="{Binding Description}"
+                                            TextColor="#CCCCCC" />
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:GrocsViewModel}}, Path=ItemTapped}"
+                                                CommandParameter="{Binding .}"
+                                                NumberOfTapsRequired="1" />
+                                        </StackLayout.GestureRecognizers>
+                                    </StackLayout>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>-->
+                        <StackLayout x:Name="LeftLane" Grid.Column="0" />
+                        <StackLayout x:Name="RightLane" Grid.Column="1" />
+                        <BoxView
+                            Grid.ColumnSpan="2"
+                            BackgroundColor="White"
+                            Opacity="0.5"
+                            VerticalOptions="End" />
+                        <BoxView
+                            Grid.ColumnSpan="2"
+                            BackgroundColor="White"
+                            Opacity="0.5"
+                            VerticalOptions="Start" />
+                    </Grid>
+                </ScrollView>
+            </Frame>
+
+            <StackLayout
+                x:Name="CartPreviewContainer"
+                Margin="16,32"
+                Orientation="Horizontal">
+                <StackLayout.GestureRecognizers>
+                    <SwipeGestureRecognizer Direction="Up" Swiped="SwipeToShowCart" />
+                </StackLayout.GestureRecognizers>
+                <Label
+                    Margin="24,0,8,0"
+                    FontAttributes="Bold"
+                    FontSize="24"
+                    Text="Cart"
+                    TextColor="White"
+                    VerticalOptions="Center"
+                    WidthRequest="100" />
+                <CollectionView
+                    x:Name="CartPreviewList"
+                    HeightRequest="35"
+                    ItemsSource="{Binding GrocsCart}"
+                    SelectionMode="None"
+                    VerticalOptions="Center">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="8" Orientation="Horizontal" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid
+                                Margin="4,0"
+                                x:DataType="model:ItemCart"
+                                WidthRequest="28">
+                                <Frame
+                                    BackgroundColor="White"
+                                    CornerRadius="24"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center" />
+                                <Image
+                                    Margin="0,6"
+                                    sharedTransitions:Transition.Name="{Binding Text}"
+                                    HorizontalOptions="Center"
+                                    Source="{Binding Image}"
+                                    WidthRequest="26" />
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                <StackLayout WidthRequest="160">
+                    <Frame
+                        Padding="0"
+                        BackgroundColor="#ffbb43"
+                        CornerRadius="26"
+                        HeightRequest="48"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        WidthRequest="48">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            HorizontalOptions="Center"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding CartCount}"
+                            TextColor="Black"
+                            VerticalOptions="Center"
+                            WidthRequest="60" />
+                    </Frame>
+                </StackLayout>
+            </StackLayout>
+
+            <StackLayout x:Name="CartContainer">
+                <StackLayout.GestureRecognizers>
+                    <SwipeGestureRecognizer Direction="Down" Swiped="SwipeToShowList" />
+                </StackLayout.GestureRecognizers>
+                <Label
+                    Padding="40,28,40,40"
+                    FontAttributes="Bold"
+                    FontSize="32"
+                    HeightRequest="120"
+                    Text="Cart"
+                    TextColor="White"
+                    WidthRequest="100" />
+                <CollectionView
+                    x:Name="CartDetailList"
+                    Margin="40,0,32,0"
+                    HeightRequest="232"
+                    ItemsSource="{Binding GrocsCart}"
+                    VerticalOptions="Center">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout
+                                Margin="0,12"
+                                x:DataType="model:ItemCart"
+                                HorizontalOptions="FillAndExpand"
+                                Orientation="Horizontal"
+                                Spacing="9">
+                                <StackLayout.Resources>
+                                    <Style TargetType="Label">
+                                        <Setter Property="FontSize" Value="14" />
+                                        <Setter Property="FontAttributes" Value="Bold" />
+                                        <Setter Property="VerticalOptions" Value="Center" />
+                                        <Setter Property="HorizontalOptions" Value="Center" />
+                                        <Setter Property="TextColor" Value="White" />
+                                    </Style>
+                                </StackLayout.Resources>
+                                <Grid x:DataType="model:ItemCart" WidthRequest="62">
+                                    <Frame
+                                        BackgroundColor="White"
+                                        CornerRadius="24"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center" />
+                                    <Image
+                                        Margin="0,6"
+                                        HorizontalOptions="Center"
+                                        Source="{Binding Image}"
+                                        WidthRequest="26" />
+                                </Grid>
+
+                                <Label Margin="0" Text="{Binding Quantity}" />
+
+                                <Label Margin="0" Text="x" />
+
+                                <Label
+                                    Margin="0"
+                                    LineBreakMode="TailTruncation"
+                                    MaxLines="2"
+                                    Text="{Binding Text}"
+                                    VerticalOptions="Center"
+                                    WidthRequest="200" />
+
+                                <Label
+                                    Margin="0"
+                                    CharacterSpacing="1"
+                                    HorizontalOptions="End"
+                                    HorizontalTextAlignment="End"
+                                    Text="{Binding Price, StringFormat='{0:c}'}"
+                                    TextColor="Gray"
+                                    WidthRequest="60" />
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <StackLayout Margin="36,0,32,0" Orientation="Horizontal">
+                    <StackLayout.Resources>
+                        <Style TargetType="Label">
+                            <Setter Property="FontSize" Value="14" />
+                            <Setter Property="FontAttributes" Value="Bold" />
+                            <Setter Property="VerticalOptions" Value="Center" />
+                            <Setter Property="TextColor" Value="White" />
+                        </Style>
+                    </StackLayout.Resources>
+                    <Grid WidthRequest="62">
+                        <Frame
+                            BackgroundColor="#181816"
+                            CornerRadius="24"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center" />
+                        <Image
+                            Margin="0,0"
+                            HorizontalOptions="Center"
+                            Source="grocs_dlv.png"
+                            WidthRequest="26" />
+                    </Grid>
+
+                    <Label Margin="0" Text="Delivery" />
+
+                    <Label
+                        Margin="0"
+                        CharacterSpacing="1"
+                        HorizontalOptions="EndAndExpand"
+                        Text="$30.00"
+                        TextColor="Gray" />
+                </StackLayout>
+
+                <Label
+                    Margin="107,-16,120,0"
+                    FontSize="12"
+                    HorizontalOptions="EndAndExpand"
+                    Text="All orders of $40 or more qualify for FREE delivery."
+                    TextColor="Gray" />
+                <Image Margin="107,0,120,0" HeightRequest="4" />
+
+                <StackLayout Margin="40,34,40,12" Orientation="Horizontal">
+                    <Label
+                        Margin="0"
+                        FontSize="24"
+                        HorizontalOptions="StartAndExpand"
+                        Text="Total:"
+                        TextColor="White"
+                        VerticalOptions="Center" />
+                    <Label
+                        Margin="0"
+                        CharacterSpacing="1"
+                        FontAttributes="Bold"
+                        FontSize="32"
+                        Text="{Binding CartAmount, StringFormat='{0:c}'}"
+                        TextColor="White" />
+                </StackLayout>
+
+                <Button
+                    Margin="40,20,40,12"
+                    BackgroundColor="#ffbc41"
+                    CornerRadius="40"
+                    HeightRequest="54"
+                    HorizontalOptions="FillAndExpand"
+                    Text="Next"
+                    TextColor="Black" />
+            </StackLayout>
+        </StackLayout>
+    </RefreshView>
+</ContentPage>
